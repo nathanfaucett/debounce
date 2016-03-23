@@ -10,20 +10,21 @@ function debounce(func, wait, immediate) {
     return function debounceFn() {
         var context = this,
             args = arguments,
-            callNow = immediate && !timeout;
-
-        function later() {
-            timeout = null;
-            if (!immediate) {
-                apply(func, args, context);
-            }
-        }
-
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+            callNow = immediate && !timeout,
+            later;
 
         if (callNow) {
-            func.apply(context, args);
+            apply(func, args, context);
+        } else {
+            later = function later() {
+                timeout = null;
+                if (!immediate) {
+                    apply(func, args, context);
+                }
+            };
+
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
         }
     };
 }
