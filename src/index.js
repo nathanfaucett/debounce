@@ -1,4 +1,4 @@
-var apply = require("apply");
+var apply = require("@nathanfaucett/apply");
 
 
 module.exports = debounce;
